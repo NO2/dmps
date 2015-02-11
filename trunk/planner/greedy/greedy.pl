@@ -1,4 +1,4 @@
-use strict;
+#use strict;
 use 5.010;
 use constant H => 5;
 
@@ -34,7 +34,7 @@ sub g {
 	}
 	if ($p<-1) {
 		return -1;
-	}elsif ($p>0 && $p<=$size) {
+	} elsif ($p>0 && $p<=$size) {
 		if ($parr[$p][$t]=='X') {
 			return -1;
 		}
@@ -46,8 +46,12 @@ sub g {
 	my $step=&max(@cost);
 	if ($cost[$step]>-1) {
 		$g+=$cost[$step];
-		if ($parr[$p][$t+1]=='X') {
-			$g+=1;
+		if($p==-1) {
+			$g+=3;
+		} elsif($p<=$size) {
+			if ($parr[$p][$t+1]=='X') {
+				$g+=1;
+			}
 		}
 		$g+=2*$p;
 		return $g;
