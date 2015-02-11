@@ -26,6 +26,7 @@ sub search {
 	}	
 	#stay
 	#move right
+}
 sub g {
 	my ($p,$t,$d,$g);
 	($p,$t,$d)=@_;
