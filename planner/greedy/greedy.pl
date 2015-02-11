@@ -1,4 +1,4 @@
-#use strict;
+use strict;
 use 5.010;
 use constant H => 5;
 
@@ -16,7 +16,9 @@ while(chomp($line= <FILE>)) {
 }
 sub search {
 	#move left
+	my ($p,$t);
 	my @cost;
+	($p,$t)=@_;
 	push @cost,&g($p-1,$t+1,H);
 	push @cost,&g($p,$t+1,H);
 	push @cost,&g($p+1,$t+1,H);
