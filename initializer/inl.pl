@@ -11,7 +11,7 @@ for (my $i=0;$i<=10;$i++) {
 	my $j=int(rand(20)+10);
 	print FILE "$j\n"; 
 	for (my $t=0;$t<=$j*3;$t++) {
-		for(my $p=0;$p<=$j;$p++) {
+		for(my $p=1;$p<=$j;$p++) {
 			my $isBoxed;
 			for (my $k=0;$k<scalar(@barr);$k++) {
 				if ($p>=$barr[$k][0] && $p<=$barr[$k][1] && $t>=$barr[$k][2] && $t<=$barr[$k][3]) {
@@ -29,17 +29,17 @@ for (my $i=0;$i<=10;$i++) {
 					#box
 					my $size=int(rand(H-1)+1);
 					if (rand() > .5) {
-						for (my $k=0;$k<$size && $p+$k<=$j && $t+$k<=$j*3;$k++) {
+						for (my $k=0;($k<$size) && ($p+$k<=$j) && ($t+$k<=$j*3);$k++) {
 							$parr[$t+$k][$p+$k]="X";
 						}
 					} else {
-						for (my $k=0;$k<$size && $p+$k<=$j && $t+$k<=$j*3;$k++) {
+						for (my $k=0;($k<$size) && ($p+$k<=$j) && ($t+$k<=$j*3);$k++) {
 							$parr[$t+$size-$k-1][$p+$k]="X";
 						}
 					}
 				} elsif (rand() <= P2) {
 					#trap
-					for (my $k=0;$k<3 && $p+$k<=$j && $t+$k<=$j*3;$k++) {
+					for (my $k=0;($k<3) && ($p+$k<=$j) && ($t+$k<=$j*3);$k++) {
 						$parr[$t+$k][$p+$k]="X";
 					}
 					if ($p+3<=$j && $t+1<=$j*3) {
@@ -57,7 +57,9 @@ for (my $i=0;$i<=10;$i++) {
 	}
 	#write
 	for (my $t=0;$t<=$j*3;$t++) {
-		for(my $p=0;$p<=$j;$p++) {
+		$parr[$t][0]=".";
+		$parr[$t][$j+1]=".";
+		for(my $p=0;$p<=$j+1;$p++) {
 			print FILE $parr[$t][$p];
 		}
 		print FILE "\n";
