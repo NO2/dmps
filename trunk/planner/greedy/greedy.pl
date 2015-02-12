@@ -9,36 +9,49 @@ chomp($size = <FILE>);
 my ($line,$j,@chars);
 while(chomp($line= <FILE>)) {
 	@chars = split //,$line;
-	for (my $i=0;$i<$#chars;$i++) {
+	for (my $i=0;$i<=$#chars;$i++) {
 		$parr[$j][$i]=$chars[$i];
+		#print $parr[$j][$i];
 	}
 	$j++;
+	#print "\n";
+}
+my $p=0;
+print "$size\n";
+for (my $t=0;($t<=($size*3- H)) && ($p<=$size);$t++) {
+	$p=search($p,$t);
+	print "$t $p\n";
 }
 sub search {
 	#move left
 	my ($p,$t);
 	my @cost;
 	($p,$t)=@_;
-	push @cost,&g($p-1,$t+1,H);
-	push @cost,&g($p,$t+1,H);
-	push @cost,&g($p+1,$t+1,H);
+	#print "sr$p $t\n";
+	push @cost,&g($p-1,$t+1,H,-1);
+	push @cost,&g($p,$t+1,H,0);
+	push @cost,&g($p+1,$t+1,H,1);
+	#print @cost , "\n";
 	my $step=&max(@cost);
 	if ($cost[$step]>-1) {
 		$p+=$step-1;
-	}	
+	}
+	return $p;	
 	#stay
 	#move right
 }
 sub g {
-	my ($p,$t,$d,$g);
-	($p,$t,$d)=@_;
+	my ($p,$t,$d,$g,$a);
+	($p,$t,$d,$a)=@_;
+	#print "sr$p $t $d\n";
 	if ($d==0) {
 		return 0;
 	}
-	if ($p<-1) {
+	if ($p<0) {
 		return -1;
 	} elsif ($p>0 && $p<=$size) {
-		if ($parr[$p][$t]=='X') {
+		#print $parr[$t][$p], " ", $parr[$t][$p]eq"X", "\n";
+		if ($parr[$t][$p]eq"X") {
 			return -1;
 		}
 	}
@@ -49,14 +62,13 @@ sub g {
 	my $step=&max(@cost);
 	if ($cost[$step]>-1) {
 		$g+=$cost[$step];
-		if($p==-1) {
-			$g+=3;
-		} elsif($p<=$size) {
-			if ($parr[$p][$t+1]=='X') {
+		if($p<=$size+1) {
+			if ($parr[$t+1][$p]eq"X") {
 				$g+=1;
+			} else {
+				$g+=2*$p;
 			}
-		}
-		$g+=2*$p;
+		} 
 		return $g;
 	}
 	return -1;		
@@ -64,7 +76,7 @@ sub g {
 }
 sub max {
 	my $max=0;
-	for (my $i=1;$i<$#_;$i++) {
+	for (my $i=1;$i<=$#_;$i++) {
 		if ($_[$i]>$_[$max]) {
 			$max=$i;
 		}
