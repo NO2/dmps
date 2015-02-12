@@ -1,14 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+<script src="jquery-1.11.2.js"></script>
 <meta http-equiv="content-type" content="text/html">
 	<title>Simulator</title>
 </head>
 <body>
 	<!--<iframe id="frmFile1" src="gen0.dat" onload="LoadFile1();" style="display: none;"></iframe>-->
-	<iframe id="frmFile2" src="path0.dat" onload="LoadFile2();" style="display: none;"></iframe>
+	<!--<iframe id="frmFile2" src="path0.dat" onload="LoadFile2();" style="display: none;"></iframe>-->
+	<div id="div2" style="display: none;"></div>
 	<script type="text/javascript">
 		//read file
+		$("#div2").load("path0.dat");
 		var canvas = document.createElement("canvas");
 		var ctx = canvas.getContext("2d");
 		canvas.width = 420;//n+2
@@ -28,10 +31,22 @@
 		var hero = {
 			x: 0
 		};
+		var t;
+		var dt=0;
+		var arrLines;//=new Array(1,2,3,4,5,6);
+		var iter;
 		//array of cars
-        var update = function (modifier) {
+        var update = function () {
+			if (d2r) dataReady=true;
 			if (!dataReady) dataReady=d1r&&d2r;
-	
+			if (dataReady) {
+				var dtb=Math.floor(dt/25);
+				var dtt=dt/25-dtb;
+				hero.x=Math.floor(dtt*20*(arrLines[dtb+1]-arrLines[dtb]))+arrLines[dtb];
+				dt++;
+				if (dtb==arrLines.length) iter.clearInterval();
+			}
+			render();
 		//update position if requires, see t elapsed, remove cars from array, add to array etc
 		};
 		var render = function () {
@@ -39,27 +54,23 @@
 			//	ctx.drawImage(bgImage, 0, 0);
 			//}
 
-		//if (heroReady) {
-		//	ctx.drawImage(heroImage, hero.x, hero.y);
-		//}
-		//draw person
-		//draw cars
-		//if (monsterReady) {
-		//ctx.drawImage(monsterImage, monster.x, monster.y);
-		//}
+			//if (heroReady) {
+			//	ctx.drawImage(heroImage, hero.x, hero.y);
+			//}
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			canvas.width=canvas.width;
+			ctx.rect(hero.x+5,215,10,10);
+			ctx.fillStyle="red";
+			ctx.fill();
+			//draw person
+			//draw cars
+			//if (monsterReady) {
+			//ctx.drawImage(monsterImage, monster.x, monster.y);
+			//}
 		};
 		var main = function () {
-			var now = Date.now();
-			var delta = now - then;
-			//setinterval?
-			update(delta / 1000);
-			render();
-
-			then = now;
-
-			// Request to do this again ASAP
-			requestAnimationFrame(main);
-
+			iter=setInterval(update,40);
+			
 
 		};
 		function LoadFile1() {
@@ -77,18 +88,19 @@
 		}
 		function LoadFile2() {
     		var oFrame = document.getElementById("frmFile2");
-    		var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+    		var strRawContents = oFrame.innerHTML;
     		while (strRawContents.indexOf("\r") >= 0)
    			     strRawContents = strRawContents.replace("\r", "");
-    		var arrLines = strRawContents.split("\n");
-    		alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-    		for (var i = 0; i < arrLines.length; i++) {
-        		var curLine = arrLines[i];
-        		alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-    		}
+    		arrLines = strRawContents.split("\n");
+			t=arrLines.length;
+    		//alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+    		//for (var i = 0; i < arrLines.length; i++) {
+        	//	var curLine = arrLines[i];
+        	//	alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+    		//}
 			d2r=true;
 		}
-main();
+		main();
     </script>
 
   

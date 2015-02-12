@@ -20,7 +20,7 @@ my $p=0;
 print "$size\n";
 for (my $t=0;($t<=($size*3- H)) && ($p<=$size);$t++) {
 	$p=search($p,$t);
-	print "$t $p\n";
+	print "$p\n";
 }
 sub search {
 	#move left
