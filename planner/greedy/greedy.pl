@@ -67,9 +67,9 @@ sub g {
 		}
 	}
 	my @cost;
-	push @cost,&g($p-1,$t+1,$d-1);
-	push @cost,&g($p,$t+1,$d-1);
-	push @cost,&g($p+1,$t+1,$d-1);
+	push @cost,&g($p-1,$t+1,$d-1,-1);
+	push @cost,&g($p,$t+1,$d-1,0);
+	push @cost,&g($p+1,$t+1,$d-1,1);
 	#print @cost , "\n";
 	my $step=&max(@cost);
 	if ($cost[$step]>-1000) {

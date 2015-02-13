@@ -1,8 +1,8 @@
 use strict;
 use 5.010;
 use constant H => 5;
-use constant P1 => .05;
-use constant P2 => .025;
+use constant P1 => .1;
+use constant P2 => .05;
 
 for (my $i=0;$i<=10;$i++) {
 	open FILE, ">", "gen$i.dat" or die $!;
