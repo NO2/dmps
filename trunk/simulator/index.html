@@ -8,9 +8,11 @@
 <body>
 	<!--<iframe id="frmFile1" src="gen0.dat" onload="LoadFile1();" style="display: none;"></iframe>-->
 	<!--<iframe id="frmFile2" src="path0.dat" onload="LoadFile2();" style="display: none;"></iframe>-->
+	<div id="div1" style="display: none;"></div>
 	<div id="div2" style="display: none;"></div>
 	<script type="text/javascript">
 		//read file
+		$("#div1").load("gen0.dat");
 		$("#div2").load("path0.dat");
 		var canvas = document.createElement("canvas");
 		var ctx = canvas.getContext("2d");
@@ -28,28 +30,37 @@
 //bgImage.src = "images/background.png";
 		var dataReady=false;
 		var d1r=false,d2r=false;
-		var hero = {
-			x: 0
-		};
+		var hero = 0;
 		var t;
 		var dt=0;
 		var arrLines;//=new Array(1,2,3,4,5,6);
+		var carLines;
+		var H=5;
 		var iter;
 		//array of cars
-        var update = function () {
-			if (d2r) dataReady=true;
+        function update() {
+			if (!d2r) {
+				//$("#div2").load("path0.dat");
+				LoadFile2();
+				d2r=true;
+			}
+			if (!d1r) {
+				//$("#div2").load("path0.dat");
+				LoadFile1();
+				d1r=true;
+			}
 			if (!dataReady) dataReady=d1r&&d2r;
 			if (dataReady) {
 				var dtb=Math.floor(dt/25);
 				var dtt=dt/25-dtb;
-				hero.x=Math.floor(dtt*20*(arrLines[dtb+1]-arrLines[dtb]))+arrLines[dtb];
+				hero=Math.floor(dtt*20*(arrLines[dtb+1]-arrLines[dtb]))+parseInt(arrLines[dtb])*20;
 				dt++;
-				if (dtb==arrLines.length) iter.clearInterval();
+				if (dtb==arrLines.length-2) clearInterval(iter);
 			}
 			render();
 		//update position if requires, see t elapsed, remove cars from array, add to array etc
-		};
-		var render = function () {
+		}
+		function render() {
 			//if (bgReady) {
 			//	ctx.drawImage(bgImage, 0, 0);
 			//}
@@ -59,7 +70,7 @@
 			//}
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			canvas.width=canvas.width;
-			ctx.rect(hero.x+5,215,10,10);
+			ctx.rect(hero+5,215,10,10);
 			ctx.fillStyle="red";
 			ctx.fill();
 			//draw person
@@ -67,28 +78,28 @@
 			//if (monsterReady) {
 			//ctx.drawImage(monsterImage, monster.x, monster.y);
 			//}
-		};
-		var main = function () {
+		}
+		function main() {
 			iter=setInterval(update,40);
 			
 
-		};
+		}
 		function LoadFile1() {
-    		var oFrame = document.getElementById("frmFile1");
-    		var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+    		var oFrame = document.getElementById("div1");
+    		var strRawContents = oFrame.innerHTML;
     		while (strRawContents.indexOf("\r") >= 0)
    			     strRawContents = strRawContents.replace("\r", "");
-    		var arrLines = strRawContents.split("\n");
-    		alert("File " + oFrame.src + " has " + arrLines.length + " lines");
-    		for (var i = 0; i < arrLines.length; i++) {
-        		var curLine = arrLines[i];
-        		alert("Line #" + (i + 1) + " is: '" + curLine + "'");
-    		}
-			d1r=true;
+    		carLines = strRawContents.split("\n");
+    		//alert("File " + oFrame.src + " has " + arrLines.length + " lines");
+    		//for (var i = 0; i < arrLines.length; i++) {
+        	//	var curLine = arrLines[i];
+        	//	alert("Line #" + (i + 1) + " is: '" + curLine + "'");
+    		//}
+			//d1r=true;
 		}
 		function LoadFile2() {
-    		var oFrame = document.getElementById("frmFile2");
-    		var strRawContents = oFrame.innerHTML;
+    		var oFrame = document.getElementById("div2");
+			var strRawContents = oFrame.innerHTML;
     		while (strRawContents.indexOf("\r") >= 0)
    			     strRawContents = strRawContents.replace("\r", "");
     		arrLines = strRawContents.split("\n");
@@ -98,7 +109,7 @@
         	//	var curLine = arrLines[i];
         	//	alert("Line #" + (i + 1) + " is: '" + curLine + "'");
     		//}
-			d2r=true;
+			//d2r=true;
 		}
 		main();
     </script>
