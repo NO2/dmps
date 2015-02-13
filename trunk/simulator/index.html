@@ -37,6 +37,7 @@
 		var carLines;
 		var H=5;
 		var iter;
+		var carr=[];
 		//array of cars
         function update() {
 			if (!d2r) {
@@ -48,17 +49,27 @@
 				//$("#div2").load("path0.dat");
 				LoadFile1();
 				d1r=true;
+				//load initial car array of size h
 			}
 			if (!dataReady) dataReady=d1r&&d2r;
 			if (dataReady) {
 				var dtb=Math.floor(dt/25);
 				var dtt=dt/25-dtb;
+				//person
 				hero=Math.floor(dtt*20*(arrLines[dtb+1]-arrLines[dtb]))+parseInt(arrLines[dtb])*20;
+				//cars
+				for (var i = 1+dtb; i < carLines.length-1 && i<H+2+dtb; i++) {
+					for (var j=0; j<=carLines[0]+1;j++) {
+						if (carLines[i].charAt(j)=='X') {
+							carr.push({x:j*20,y:((H+1+dtb-i)*40+dtt*40)});
+						}
+					}
+				}
 				dt++;
 				if (dtb==arrLines.length-2) clearInterval(iter);
 			}
 			render();
-		//update position if requires, see t elapsed, remove cars from array, add to array etc
+		//update position, see t elapsed, remove cars from array, add to array etc
 		}
 		function render() {
 			//if (bgReady) {
@@ -70,9 +81,19 @@
 			//}
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			canvas.width=canvas.width;
+			ctx.beginPath();
+			for (var j=0; j<carr.length;j++) {
+				ctx.rect(carr[j].x+1,carr[j].y+1,18,38);
+				ctx.fillStyle="red";
+				ctx.fill();
+			}
+			carr=[];
+			ctx.closePath();
+			ctx.beginPath();
 			ctx.rect(hero+5,215,10,10);
-			ctx.fillStyle="red";
+			ctx.fillStyle="green";
 			ctx.fill();
+			ctx.closePath();
 			//draw person
 			//draw cars
 			//if (monsterReady) {
