@@ -17,7 +17,7 @@ while(chomp($line= <FILE>)) {
 	#print "\n";
 }
 my $p=0;
-print "$size\n";
+print "0\n";
 for (my $t=0;($t<=($size*3- H)) && ($p<=$size);$t++) {
 	$p=search($p,$t);
 	print "$p\n";
@@ -52,6 +52,9 @@ sub g {
 	} elsif ($p>0 && $p<=$size) {
 		#print $parr[$t][$p], " ", $parr[$t][$p]eq"X", "\n";
 		if ($parr[$t][$p]eq"X") {
+			return -1;
+		}
+		if (($parr[$t][$p-$a] eq "X") && ($parr[$t-1][$p] eq "X")) {
 			return -1;
 		}
 	}

@@ -49,6 +49,7 @@
 				//$("#div2").load("path0.dat");
 				LoadFile1();
 				d1r=true;
+				canvas.width=(parseInt(carLines[0])+2)*20;
 				//load initial car array of size h
 			}
 			if (!dataReady) dataReady=d1r&&d2r;
@@ -83,7 +84,7 @@
 			canvas.width=canvas.width;
 			ctx.beginPath();
 			for (var j=0; j<carr.length;j++) {
-				ctx.rect(carr[j].x+1,carr[j].y+1,18,38);
+				ctx.rect(carr[j].x+4,carr[j].y+10,12,20);
 				ctx.fillStyle="red";
 				ctx.fill();
 			}
