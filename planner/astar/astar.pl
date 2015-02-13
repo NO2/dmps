@@ -23,9 +23,9 @@ while (@sols[0][0]<=$size && @sols[0][2]>=0) {
 	#expand top state, pop, put back new states in sorted order
 	#expand with possibility rules (diagonal/occupancy)
 	#closeness gets cost addition
-	#TODO pop current state
-		
-	my @cost;
+	#pop current state
+	my $sol=shift @sols;
+	&insert([$sol->[0]-1,$sol->[1]+1,$sol->[2]+&f($sol->[0]-1,$sol->[1]+1,-1),&g($sol->[0])]
 	push @cost,&f($p-1,$t+1,-1);
 	push @cost,&f($p,$t+1,0);
 	push @cost,&f($p+1,$t+1,1);
