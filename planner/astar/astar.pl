@@ -19,7 +19,7 @@ while(chomp($line= <FILE>)) {
 close FILE;
 my @sols;
 push @sols,[0,0,0,&g(0),""];
-while (@sols[0][0]<=$size && @sols[0][2]>=0) {
+while ($sols[0][0]<=$size && $sols[0][2]>=0) {
 	#expand top state, pop, put back new states in sorted order
 	#expand with possibility rules (diagonal/occupancy)
 	#closeness gets cost addition
@@ -27,6 +27,7 @@ while (@sols[0][0]<=$size && @sols[0][2]>=0) {
 	my $sol=shift @sols;
 	my ($p,$t,$f,$h,$s);
 	($p,$t,$f,$s)=($sol->[0],$sol->[1],$sol->[2],$sol->[4]);
+	my @cost;
 	push @cost,&f($p-1,$t+1,-1);
 	push @cost,&f($p,$t+1,0);
 	push @cost,&f($p+1,$t+1,1);
@@ -36,13 +37,13 @@ while (@sols[0][0]<=$size && @sols[0][2]>=0) {
 	#foreach cost (use inf) add to sols based on f+g+current
 	#
 }
-my @chars=split("", @sols[0][4]);
+my @chars=split("", $sols[0][4]);
 my $p=0;
 print "0\n";
 foreach (@chars) {
-	if ($_p eq "l") {
+	if ($_ eq "l") {
 		$p-=1;
-	} elsif ($_p eq "r") {
+	} elsif ($_ eq "r") {
 		$p+=1;
 	}
 	print "$p\n";
