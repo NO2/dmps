@@ -19,7 +19,9 @@ while(chomp($line= <FILE>)) {
 close FILE;
 my @sols;
 push @sols,[0,0,0,&g(0),""];
-while ($sols[0][0]<=$size && $sols[0][2]>=0) {
+my @cost;
+while (@sols>0 && $sols[0][0]<=$size && $sols[0][2]>=0) {
+	#&printarr;
 	#expand top state, pop, put back new states in sorted order
 	#expand with possibility rules (diagonal/occupancy)
 	#closeness gets cost addition
@@ -27,16 +29,19 @@ while ($sols[0][0]<=$size && $sols[0][2]>=0) {
 	my $sol=shift @sols;
 	my ($p,$t,$f,$h,$s);
 	($p,$t,$f,$s)=($sol->[0],$sol->[1],$sol->[2],$sol->[4]);
-	my @cost;
-	push @cost,&f($p-1,$t+1,-1);
-	push @cost,&f($p,$t+1,0);
-	push @cost,&f($p+1,$t+1,1);
-	&insert([$p-1,$t+1,$f+$cost[0],$f+$cost[0]+&g($p-1),$s."l"]);
-	&insert([$p,$t+1,$f+$cost[1],$f+$cost[1]+&g($p),$s."s"]);
-	&insert([$p+1,$t+1,$f+$cost[2],$f+$cost[2]+&g($p+1),$s."r"]);
+	if ($t<=3*$size) {
+		undef @cost;
+		push @cost,&f($p-1,$t+1,-1);
+		push @cost,&f($p,$t+1,0);
+		push @cost,&f($p+1,$t+1,1);
+		&insert([$p-1,$t+1,$f+$cost[0],$f+$cost[0]+&g($p-1),$s."l"]) if $cost[0]>=0 && &g($p-1)+$t+1<=3*$size;
+		&insert([$p,$t+1,$f+$cost[1],$f+$cost[1]+&g($p),$s."s"]) if $cost[1]>=0 &g($p)+$t+1<=3*$size;
+		&insert([$p+1,$t+1,$f+$cost[2],$f+$cost[2]+&g($p+1),$s."r"]) if $cost[2]>=0 &g($p+1)+$t+1<=3*$size;
+	}
 	#foreach cost (use inf) add to sols based on f+g+current
 	#
 }
+#&printarr;
 my @chars=split("", $sols[0][4]);
 my $p=0;
 print "0\n";
@@ -79,10 +84,25 @@ sub g {
 }
 sub insert {
 	my $i;
-	for ($i=0;$i<=$#sols;$i++) {
-		if ($_[0][4]<$sols[$i][4]) {
-			last;
+	if ($_[0][3]>=0) {
+		for ($i=0;$i<=$#sols && $sols[$i][2]>=0;$i++) {
+			return if ($_[0][0]==$sols[$i][0] && $_[0][1]==$sols[$i][1] && $_[0][2]>=$sols[$i][2]);
+			if ($_[0][0]==$sols[$i][0] && $_[0][1]==$sols[$i][1] && $_[0][2]<$sols[$i][2]) {
+				$sols[$i]=$_[0];
+				return;
+			}
+			if ($_[0][3]<$sols[$i][3]) {
+				last;
+			}
 		}
+	} else {
+		$i=@sols;
 	}
 	splice @sols,$i,0,$_[0];
+}
+sub printarr {
+	foreach (@sols) {
+		print "$_->[0] $_->[1] $_->[2] $_->[3] $_->[4]\n";
+	}
+	print "\n";
 }
