@@ -25,42 +25,27 @@ while (@sols[0][0]<=$size && @sols[0][2]>=0) {
 	#closeness gets cost addition
 	#pop current state
 	my $sol=shift @sols;
-	my ($p,$t,$f,$h);
-	($p,$t,$f)=($sol->[0],$sol->[1],$sol->[2]);
-	&insert([$sol->[0]-1,$sol->[1]+1,$sol->[2]+&f($sol->[0]-1,$sol->[1]+1,-1),&g($sol->[0])]
+	my ($p,$t,$f,$h,$s);
+	($p,$t,$f,$s)=($sol->[0],$sol->[1],$sol->[2],$sol->[4]);
 	push @cost,&f($p-1,$t+1,-1);
 	push @cost,&f($p,$t+1,0);
 	push @cost,&f($p+1,$t+1,1);
+	&insert([$p-1,$t+1,$f+$cost[0],$f+$cost[0]+&g($p-1),$s."l"]);
+	&insert([$p,$t+1,$f+$cost[1],$f+$cost[1]+&g($p),$s."s"]);
+	&insert([$p+1,$t+1,$f+$cost[2],$f+$cost[2]+&g($p+1),$s."r"]);
 	#foreach cost (use inf) add to sols based on f+g+current
 	#
 }
-#my $p=0;
-#print "0\n";
-#for (my $t=0;($t<=($size*3- H)) && ($p<=$size) && $p>-1;$t++) {
-#	$p=search($p,$t);
-#	if ($p>-1) {
-#		print "$p\n";
-#	}
-#}
-sub search {
-	#move left
-	my ($p,$t);
-	my @cost;
-	($p,$t)=@_;
-	print "sr$p $t\n";
-	push @cost,&g($p-1,$t+1,H,-1);
-	push @cost,&g($p,$t+1,H,0);
-	push @cost,&g($p+1,$t+1,H,1);
-	print @cost , "\n";
-	my $step=&max(@cost);
-	if ($cost[$step]>-1000) {
-		$p+=$step-1;
-	} else {
-		return -1;
+my @chars=split("", @sols[0][4]);
+my $p=0;
+print "0\n";
+foreach (@chars) {
+	if ($_p eq "l") {
+		$p-=1;
+	} elsif ($_p eq "r") {
+		$p+=1;
 	}
-	return $p;	
-	#stay
-	#move right
+	print "$p\n";
 }
 sub f {
 	my ($p,$t,$g,$a);
@@ -91,14 +76,12 @@ sub f {
 sub g {
 	return 2*($size+1-$_[0]);
 }
-sub max {
-	my $max=0;
-	for (my $i=1;$i<=$#_;$i++) {
-		if ($_[$i]>$_[$max]) {
-			$max=$i;
+sub insert {
+	my $i;
+	for ($i=0;$i<=$#sols;$i++) {
+		if ($_[0][4]<$sols[$i][4]) {
+			last;
 		}
 	}
-	return $max;
-}
-sub insert {
+	splice @sols,$i,0,$_[0];
 }
