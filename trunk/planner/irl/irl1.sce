@@ -4,10 +4,16 @@
 //get new optimal policy , add to set of policies
 //--run for n times--
 w=rand(H*H+2*H+3,1);
+//ws,ns have size
 pls=cell();
 pls(1).entries=qlearn(w);
 for i=1:20
-    
+    A1=zeros(ws,ns);
+    A2=eye(ws,ws);
+    A3=zeros(ws,ns);
+    A4=-eye(ws,ws);
+    A5=-eye(ns,ns);
+    A7=-eye(ns,ns);
 end
 //max sum of diff -> gets new weights
 //A->2*(n+w)x(n+w) -n number of policies, w features
