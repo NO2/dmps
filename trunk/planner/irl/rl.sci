@@ -2,14 +2,24 @@ gamma=.9;
 alpha=.7;
 function z=qlearn(w)
     q=rand((gsize+2),3*gsize,3);
-    s=0;
-    t=0;
     for i=1:100
+        s=0;
+        t=0;
         while (s<=gsize) 
             a=getact(s,t,w);
             s2=s+a;
             q(s,t,a)=rw(s,t,a,w)+gamma*max(q(s2,t+1,1),q(s2,t+1,1),q(s2,t+1,2));
+            s=s2;
+            t=t+1;
         end
+    end
+    s=0;
+    t=0;
+    while (s<=gsize) 
+        a=getacts(s,t);
+        z(t+1)=a;
+        s=s+a;
+        t=t+1;
     end
 endfunction
 function r=rw(s,t,a,w)
@@ -21,6 +31,10 @@ function a=getact(s,t,w)
         r(j)=rw(s,t,j-2,w);
     end
     [mr,a]=max(r);
+    a=a-2;
+endfunction
+function a=getacts(s,t)
+    [mr,a]=max(q(s,t,1),q(s,t,1),q(s,t,2));
     a=a-2;
 endfunction
 //func rw
