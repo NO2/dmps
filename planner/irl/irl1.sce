@@ -6,6 +6,9 @@
 w=rand(H*H+2*H+3,1);
 pls=cell();
 pls(1).entries=qlearn(w);
+for i=1:20
+    
+end
 //max sum of diff -> gets new weights
 //A->2*(n+w)x(n+w) -n number of policies, w features
 //B -2*x 1s, rest 0s
