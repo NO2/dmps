@@ -24,6 +24,7 @@ function y=genf(p, t, a) //p:state reached by action a at time t
             cnt=cnt+1;
         end    
     end
+    y(cnt)=0;
     if (p>0 & p<=gsize) then //loadp should be executed first
 //        if (strcmp(part(grid(t+1),p+1),"X")==0) then
 //            y(0)=-1000;
@@ -32,8 +33,6 @@ function y=genf(p, t, a) //p:state reached by action a at time t
 //        end
         if (strcmp(part(grid(t+1),p+1-a),"X")==0 & strcmp(part(grid(t),p+1),"X")==0) then
             y(cnt)=-1000;
-        else
-            y(cnt)=0;
         end
     end
     y(cnt+1)=p;
