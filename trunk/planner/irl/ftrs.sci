@@ -6,7 +6,7 @@ function y=genf(p, t, a) //p:state reached by action a at time t
 //    end
     //0:current state
     //1:diagonal blockage
-    cnt=0;
+    cnt=1;
     for i = -H:H
         for j = abs(i):H+1
             if (p+i<0) then
