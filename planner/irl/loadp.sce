@@ -1,7 +1,7 @@
 H=5;
 [fdg, err] = mopen("gen0.dat");
 [fdp, err] = mopen("path0.dat");
-gsize=mgetl(fdg,1);
+gsize=strtod(mgetl(fdg,1));
 grid=mgetl(fdg);
 expert=mgetl(fdp);
 //use part to search character
