@@ -3,9 +3,8 @@
 
 //get new optimal policy , add to set of policies
 //--run for n times--
-w=rand(H*H+2*H+3,1);
+w=rand(ws,1);
 //ws,ns have size
-ws=H*H+2*H+3;
 pls=cell();
 pls(1).entries=qlearn(w);
 A2=eye(ws,ws);

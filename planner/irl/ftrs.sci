@@ -6,6 +6,7 @@ function y=genf(p, t, a) //p:state reached by action a at time t
 //    end
     //0:current state
     //1:diagonal blockage
+    y=zeros(ws,1);
     cnt=1;
     for i = -H:H
         for j = abs(i):H+1
@@ -14,7 +15,7 @@ function y=genf(p, t, a) //p:state reached by action a at time t
             else
                 y(cnt)=0;
             end
-            if (p+i>0 & p+i<=gsize) then //loadp should be executed first
+            if (p+i>0 & p+i<=gsize & t+j<=3*gsize-H) then //loadp should be executed first
                 if (strcmp(part(grid(t+1+j),p+i+1),"X")==0) then
                     y(cnt)=-1000;
                 elseif (strcmp(part(grid(t+2+j),p+i+1),"X")==0) then
@@ -40,7 +41,7 @@ endfunction
 function rw=evalr(pls)
     //pls nx2 matrix, position and action
     //return a row
-    rw=zeros(H*H+2*H+3,1);
+    rw=zeros(ws,1);
     s=0;
     for t=1:size(pls,1)
         s=s+pls(t+1);
