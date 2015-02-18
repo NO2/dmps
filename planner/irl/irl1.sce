@@ -16,7 +16,7 @@ for ns=1:20
     A5=-eye(ns,ns);
     //A6 definition, sum 
     A6=zeros(ns,ws);
-    vr=evalr(plc);//make it return a row
+    vr=evalr(epls);//make it return a row
     for i=1:ns
         pler=evalr(pls(i).entries);
         A6(i,:)=vr-pler;
