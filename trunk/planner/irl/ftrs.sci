@@ -44,8 +44,8 @@ function rw=evalr(pls)
     rw=zeros(ws,1);
     s=0;
     for t=1:size(pls,1)
-        s=s+pls(t+1);
-        rw=rw+gm*genf(s,t,pls(t+1));
+        s=s+pls(t);
+        rw=rw+gm*genf(s,t,pls(t));
     end
     rw=rw';
 endfunction
