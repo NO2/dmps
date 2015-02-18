@@ -5,19 +5,36 @@
 //--run for n times--
 w=rand(H*H+2*H+3,1);
 //ws,ns have size
+ws=H*H+2*H+3;
 pls=cell();
 pls(1).entries=qlearn(w);
-for i=1:20
+A2=eye(ws,ws);
+A4=-eye(ws,ws);
+for ns=1:20
     A1=zeros(ws,ns);
-    A2=eye(ws,ws);
     A3=zeros(ws,ns);
-    A4=-eye(ws,ws);
     A5=-eye(ns,ns);
+    //A6 definition, sum 
+    A6=zeros(ns,ws);
+    vr=evalr(plc);//make it return a row
+    for i=1:ns
+        pler=evalr(pls(i).entries);
+        A6(i,:)=vr-pler;
+    end
     A7=-eye(ns,ns);
+    A8=-2*A6;
+    A=cat(1,cat(2,A1,A2),cat(2,A3,A4),cat(2,A5,A6),cat(2,A7,A8));
+    B=zeros(2*(ns+ws),1);
+    B(1:2*ws,1)=ones(2*ws,1);
+    c=zeros(ns+ws,1);
+    c(1:ns,1)=ones(ns,1);
+    xopt=karmarkar([],[],c,[],[],[],[],[],A,B);
+    w=xopt(ns+1:);
+    pls(ns+1).entries=qlearn(w);
 end
 //max sum of diff -> gets new weights
 //A->2*(n+w)x(n+w) -n number of policies, w features
-//B -2*x 1s, rest 0s
+//B -2*w 1s, rest 0s
 //A=[A1|A2;A3|A4;A5|A6;A7|A8]
 //A1=0
 //A2=unit
@@ -27,3 +44,4 @@ end
 //A6=V(e)-V(mu)
 //A7=-unit
 //A8=-2*[V(e)-V(mu)
+//C n 1s, rest 0
