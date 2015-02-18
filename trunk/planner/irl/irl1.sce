@@ -27,7 +27,7 @@ for ns=1:20
     B(1:2*ws,1)=ones(2*ws,1);
     c=zeros(ns+ws,1);
     c(1:ns,1)=ones(ns,1);
-    xopt=karmarkar([],[],c,[],[],[],[],[],A,B);
+    xopt=linpro(c,A,B);
     w=xopt(ns+1:);
     pls(ns+1).entries=qlearn(w);
 end
