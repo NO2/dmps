@@ -1,5 +1,5 @@
-gamma=.9;
-alpha=.7;
+gm=.9;
+alph=.7;
 function z=qlearn(w)
     q=rand((gsize+2),3*gsize,3);
     for i=1:100
@@ -8,7 +8,7 @@ function z=qlearn(w)
         while (s<=gsize) 
             a=getact(s,t,w);
             s2=s+a;
-            q(s,t,a)=rw(s,t,a,w)+gamma*max(q(s2,t+1,1),q(s2,t+1,1),q(s2,t+1,2));
+            q(s,t,a)=rw(s,t,a,w)+gm*max(q(s2,t+1,1),q(s2,t+1,1),q(s2,t+1,2));
             s=s2;
             t=t+1;
         end

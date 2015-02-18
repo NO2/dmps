@@ -37,3 +37,14 @@ function y=genf(p, t, a) //p:state reached by action a at time t
     end
     y(cnt+1)=p;
 endfunction
+function rw=evalr(pls)
+    //pls nx2 matrix, position and action
+    //return a row
+    rw=zeros(H*H+2*H+3,1);
+    s=0;
+    for t=1:size(pls,1)
+        s=s+pls(t+1);
+        rw=rw+gm*genf(s,t,pls(t+1));
+    end
+    rw=rw';
+endfunction
