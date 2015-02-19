@@ -10,9 +10,9 @@ pls(1).entries=qlearn(w);
 A2=eye(ws,ws);
 A4=-eye(ws,ws);
 for ns=1:20
-    A1=zeros(ws,ns);
-    A3=zeros(ws,ns);
-    A5=-eye(ns,ns);
+    //A1=zeros(ws,ns);
+    //A3=zeros(ws,ns);
+    //A5=-eye(ns,ns);
     //A6 definition, sum 
     A6=zeros(ns,ws);
     vr=evalr(epls);//make it return a row
@@ -20,15 +20,16 @@ for ns=1:20
         pler=evalr(pls(i).entries);
         A6(i,:)=vr-pler;
     end
-    A7=-eye(ns,ns);
-    A8=-2*A6;
-    A=cat(1,cat(2,A1,A2),cat(2,A3,A4),cat(2,A5,A6),cat(2,A7,A8));
-    B=zeros(2*(ns+ws),1);
-    B(1:2*ws,1)=ones(2*ws,1);
-    c=zeros(ns+ws,1);
-    c(1:ns,1)=ones(ns,1);
+    //A7=-eye(ns,ns);
+    //A8=-2*A6;
+    A=cat(1,A2,A4);
+    B=ones(2*ws,1);
+    //B(1:2*ws,1)=ones(2*ws,1);
+    //c=zeros(ns+ws,1);
+    //c(1:ns,1)=ones(ns,1);
+    c=sum(A6,1)';
     xopt=linpro(-c,A,B);
-    w=xopt(ns+1:);
+    w=xopt;
     pls(ns+1).entries=qlearn(w);
 end
 //max sum of diff -> gets new weights

@@ -1,25 +1,25 @@
-//gen random weights
-//get optimal policy
-
-//get new optimal policy , add to set of policies
-//--run for n times--
+#//gen random weights
+#//get optimal policy
+#
+#//get new optimal policy , add to set of policies
+#//--run for n times--
 w=rand(ws,1);
-//ws,ns have size
+#//ws,ns have size
 pls=cell();
-pls(1).entries=qlearn(w);
+pls{1}=qlearn(w);
 A2=eye(ws,ws);
 A4=-eye(ws,ws);
 for ns=1:20
     A1=zeros(ws,ns);
     A3=zeros(ws,ns);
     A5=-eye(ns,ns);
-    //A6 definition, sum 
+    #//A6 definition, sum 
     A6=zeros(ns,ws);
-    vr=evalr(epls);//make it return a row
+    vr=evalr(epls);#//make it return a row
     for i=1:ns
-        pler=evalr(pls(i).entries);
+        pler=evalr(pls{i});
         A6(i,:)=vr-pler;
-    end
+    endfor
     A7=-eye(ns,ns);
     A8=-2*A6;
     A=cat(1,cat(2,A1,A2),cat(2,A3,A4),cat(2,A5,A6),cat(2,A7,A8));
@@ -27,20 +27,20 @@ for ns=1:20
     B(1:2*ws,1)=ones(2*ws,1);
     c=zeros(ns+ws,1);
     c(1:ns,1)=ones(ns,1);
-    xopt=linpro(c,A,B);
-    w=xopt(ns+1:);
-    pls(ns+1).entries=qlearn(w);
-end
-//max sum of diff -> gets new weights
-//A->2*(n+w)x(n+w) -n number of policies, w features
-//B -2*w 1s, rest 0s
-//A=[A1|A2;A3|A4;A5|A6;A7|A8]
-//A1=0
-//A2=unit
-//A3=0
-//A4=unit
-//A5=-unit
-//A6=V(e)-V(mu)
-//A7=-unit
-//A8=-2*[V(e)-V(mu)
-//C n 1s, rest 0
+    xopt=glpk(c,A,B,[],[],"U","C",-1);
+    w=xopt((ns+1):);
+    pls{ns+1}=qlearn(w);
+endfor
+#//max sum of diff -> gets new weights
+#//A->2*(n+w)x(n+w) -n number of policies, w features
+#//B -2*w 1s, rest 0s
+#//A=[A1|A2;A3|A4;A5|A6;A7|A8]
+#//A1=0
+#//A2=unit
+#//A3=0
+#//A4=unit
+#//A5=-unit
+#//A6=V(e)-V(mu)
+#//A7=-unit
+#//A8=-2*[V(e)-V(mu)
+#//C n 1s, rest 0
