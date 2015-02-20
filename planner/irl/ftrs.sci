@@ -36,7 +36,7 @@ function y=genf(p, t, a) //p:state reached by action a at time t
             y(cnt)=-1000;
         end
     end
-    y(cnt+1)=p;
+    y(cnt+1)=p/(t+1);
 endfunction
 function rw=evalr(pls)
     //pls nx2 matrix, position and action
