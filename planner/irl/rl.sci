@@ -2,7 +2,7 @@ gm=.5;
 alph=.7;
 function z=qlearn(w)
     q=rand((gsize+2),3*gsize,3);
-    for i=1:100
+    for i=1:5000
         s=0;
         t=0;
         while (s>=0 & s<=gsize & t<=3*gsize-H) 
@@ -57,6 +57,17 @@ function a=getacts(s,t)
         a=a+1;
     end
     a=a-2;
+endfunction
+function z=br(w)
+    s=0;
+    t=0;
+    while (s>=0 & s<=gsize & t<=3*gsize-H) 
+        z(t+1)=s;
+        a=getact(s,t,w);
+        s=s+a;
+        t=t+1;
+    end
+    z(t+1)=s;
 endfunction
 //func rw
 //func getact
