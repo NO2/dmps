@@ -38,9 +38,9 @@ sub search {
 	my $step=&max(@cost);
 	if ($cost[$step]>-1000) {
 		$p+=$step-1;
-	} else {
-		return -1;
-	}
+	} #else {
+	#	return -1;
+	#}
 	return $p;	
 	#stay
 	#move right
