@@ -2,7 +2,7 @@ gm=.5;
 alph=.7;
 function z=qlearn(w)
     q=rand((gsize+2),3*gsize,3);
-    for i=1:5000
+    for i=1:100
         s=0;
         t=0;
         while (s>=0 & s<=gsize & t<=3*gsize-H) 
