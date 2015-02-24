@@ -30,17 +30,17 @@ sub search {
 	my ($p,$t);
 	my @cost;
 	($p,$t)=@_;
-	print "sr$p $t\n";
+	#print "sr$p $t\n";
 	push @cost,&g($p-1,$t+1,H,-1);
 	push @cost,&g($p,$t+1,H,0);
 	push @cost,&g($p+1,$t+1,H,1);
-	print @cost , "\n";
+	#print @cost , "\n";
 	my $step=&max(@cost);
 	if ($cost[$step]>-1000) {
 		$p+=$step-1;
-	} #else {
-	#	return -1;
-	#}
+	} else {
+		$p+=1;
+	}
 	return $p;	
 	#stay
 	#move right
@@ -75,7 +75,7 @@ sub g {
 			if ($parr[$t+1][$p]eq"X") { #close to a hit
 				$g-=5;
 			}
-			$g+=$p-abs($a)-$t;
+			$g+=$p-abs($a);#-$t;
 		} 
 		return $g;
 	}
