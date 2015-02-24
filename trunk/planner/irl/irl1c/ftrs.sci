@@ -1,4 +1,4 @@
-function y=genf(p, t, a) //p:state reached by action a at time t
+function y=genf(p, t, sa, a) //p:state reached by action a at time t
 //    if (p<0) then
 //        y(0)=-1000;
 //    else
@@ -43,16 +43,22 @@ function y=genf(p, t, a) //p:state reached by action a at time t
         end
     end
     //cnt=1;
-    y(cnt+1)=p;
+    y(cnt+1)=sa+abs(a);
+    y(cnt+2)=0;
+    if p==gsize+1 then
+        y(cnt+2)=1000;
+    end
 endfunction
 function rw=evalr(pls)
     //pls nx2 matrix, position and action
     //return a row
     rw=zeros(ws,1);
     s=0;
+    sa=0;
     for t=1:size(pls,1)
         s=s+pls(t);
-        rw=rw+gm*genf(s,t,pls(t));
+        sa=sa+abs(pls(t));
+        rw=rw+gm*genf(s,t,sa,pls(t));
     end
     rw=rw/size(pls,1);
     rw=rw';
