@@ -2,13 +2,18 @@ function d=eefc(wt)
     z1s(gsize+2,:,:)=ones(z1s(gsize+2,:,:));
     for n=1:20
         for i=gsize+1:-1:1
-            for t=3*gsize:-1:1
-                for sa=3*gsize:-1:1
+            for t=3*gsize-1:-1:1
+                for sa=3*gsize-1:-1:1
                     for j=1:3
                         //check valid action
+                        printf("%d %d %d %d\n",i,t,sa,j);
                         s2=i+j-2;
                         if s2>0 & s2<=gsize+2 then
-                            z1a(i,t,sa,j)=exp(-rw(i-1,t-1,sa-1,j-2,wt))*z1s(s2,t+1,sa+abs(j-2));
+                            ep=exp(-rw(i-1,t-1,sa-1,j-2,wt));
+                            printf("%d %d %d %d\n",s2,t+1,sa+abs(j-2),j);
+                            z1s(i,t,sa);
+                            ep=ep*z1s(s2,t+1,sa+abs(j-2));
+                            z1a(i,t,sa,j)=ep;//*z1s(s2,t+1,sa+abs(j-2));
                         end
                     end
                     z1s(i,t,sa)=sum(z1a(i,t,sa,:));
