@@ -2,7 +2,7 @@ gm=.9;
 alph=.7;
 function z=qlearn(w)
     q=rand((gsize+2),3*gsize,3*gsize,3);
-    for i=1:1000
+    for i=1:5000
         s=0;
         t=0;
         sa=0;
@@ -10,10 +10,10 @@ function z=qlearn(w)
             a=getact(s,t,sa,w);
             s2=s+a;
             //printf("%d %d %d\n",s,t,s2);
-            if s2>=0
+            if s2>=0 & s2<=gsize
                 q(s+1,t+1,sa+1,a+2)=rw(s,t,sa,a,w)+gm*max(q(s2+1,t+2,sa+2,1),q(s2+1,t+2,sa+1,2),q(s2+1,t+2,sa+2,3));
-            //else
-            //    q(s+1,t+1,a+2)=rw(s,t,sa,a,w);
+            else
+                q(s+1,t+1,sa+1,a+2)=rw(s,t,sa,a,w);
             end
             s=s2;
             t=t+1;
@@ -61,6 +61,19 @@ function a=getacts(s,t,sa)
         a=a+1;
     end
     a=a-2;
+endfunction
+function z=br(w)
+    s=0;
+    t=0;
+    sa=0;
+    while (s>=0 & s<=gsize & t<=3*gsize-H) 
+        z(t+1)=s;
+        a=getact(s,t,sa,w);
+        s=s+a;
+        t=t+1;
+        sa=sa+abs(a);
+    end
+    z(t+1)=s;
 endfunction
 //func rw
 //func getact
