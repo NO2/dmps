@@ -25,7 +25,7 @@ for ns=1:20
         for t=1:3*gsize
             for sa=1:3*gize
                 for j=1:3
-                    dw=dw-Da(i,t,sa,j)*rw(i-1,t-1,sa-1,j-2);
+                    dw=dw-Da(i,t,sa,j)*rw(i-1,t-1,sa-1,j-2,w);
                 end
             end
         end

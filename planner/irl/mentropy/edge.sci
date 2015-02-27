@@ -8,7 +8,7 @@ function d=eefc(w)
                         //check valid action
                         s2=i+j-2;
                         if s2>0 & s2<=gsize+2 then
-                            z1a(i,t,sa,j)=exp(rw(i-1,t-1,sa-1,j-2))*z1s(s2,t+1,sa+abs(j-2));
+                            z1a(i,t,sa,j)=exp(rw(i-1,t-1,sa-1,j-2,w))*z1s(s2,t+1,sa+abs(j-2));
                         end
                     end
                     z1s(i,t,sa)=sum(z1a(i,t,sa,:));
