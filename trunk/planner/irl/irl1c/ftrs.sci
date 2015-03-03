@@ -60,6 +60,6 @@ function rw=evalr(pls)
         sa=sa+abs(pls(t));
         rw=rw+gm*genf(s,t,sa,pls(t));
     end
-    rw=rw/size(pls,1);
+    //rw=rw/size(pls,1);
     rw=rw';
 endfunction
