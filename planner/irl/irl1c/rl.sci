@@ -32,8 +32,8 @@ function z=qlearn(w)
     end
     //disp(q);
 endfunction
-function r=rw(s,t,sa,a,w)
-    y=genf(s+a,t+1,sa,a);
+function r=rw(p,t,sa,a,w)
+    y=genf(p+a,t+1,sa,a);
     //disp(w);
     //disp(size(y,1));
     //r=1;

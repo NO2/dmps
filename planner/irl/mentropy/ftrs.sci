@@ -30,7 +30,8 @@ function y=genf(p, t, sa, a) //p:state reached by action a at time t
     cnt=2;
     //y(1)=k;
     y(cnt)=0;
-    if (p>0 & p<=gsize) then //loadp should be executed first
+    //printf("%d %d %d %d\n",p,t,sa,a);
+    if (p>0 & p<=gsize & t>0 & t<3*gsize) then //loadp should be executed first
         if (strcmp(part(grid(t+1),p+1),"X")==0) then
             y(1)=-1.000;
         elseif (strcmp(part(grid(t+2),p+1),"X")==0) then
@@ -53,13 +54,10 @@ function rw=evalr(pls)
     //pls nx2 matrix, position and action
     //return a row
     rw=zeros(ws,1);
-    s=0;
     sa=0;
     for t=1:size(pls,1)
-        s=s+pls(t);
         sa=sa+abs(pls(t));
         rw=rw+gm*genf(s,t,sa,pls(t));
     end
-    rw=rw/size(pls,1);
     rw=rw';
 endfunction

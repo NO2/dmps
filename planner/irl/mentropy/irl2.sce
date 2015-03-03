@@ -19,19 +19,21 @@ for ns=1:20
     z2a=zeros((gsize+2),3*gsize,3*gsize,3);
     Da=eefc(w);
     //compute gradient
-    fs=evalr(pls)*w;
-    dw=fs;
+    fs=evalr(epls);
+    dw=fs';
     for i=1:gsize+2
         for t=1:3*gsize
-            for sa=1:3*gize
+            for sa=1:3*gsize
                 for j=1:3
-                    dw=dw-Da(i,t,sa,j)*rw(i-1,t-1,sa-1,j-2,w);
+                    dw=dw-Da(i,t,sa,j)*genf(i-1+j-2,t,sa-1,j-2);//rw(i-1,t-1,sa-1,j-2,w);
                 end
             end
         end
     end
     //update weights
-    w=w.*exp(lmd*dw/ns);
+    //w=w.*exp(lmd*dw/ns);
+    w=w-lmd*dw/ns
+    printf("%d\n",dw);
 end
 //pls(ns+1).entries=qlearn(w);
 
