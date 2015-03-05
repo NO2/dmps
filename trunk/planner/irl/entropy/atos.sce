@@ -1,4 +1,4 @@
-plo=pls(21).entries;
+plo=qlearn(w);
 s=zeros(size(plo,1)+1,1);
 for j=1:size(s,1)-1
     s(j+1)=s(j)+plo(j);
