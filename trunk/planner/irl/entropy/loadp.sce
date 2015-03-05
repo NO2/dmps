@@ -1,5 +1,5 @@
 H=5;
-ws=5;
+ws=4;
 [fdg, err] = mopen("gen0.dat");
 [fdp, err] = mopen("path0.dat");
 gsize=strtod(mgetl(fdg,1));

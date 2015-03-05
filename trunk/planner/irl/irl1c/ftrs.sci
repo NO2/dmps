@@ -48,6 +48,7 @@ function y=genf(p, t, sa, a) //p:state reached by action a at time t
     if p==gsize+1 then
         y(cnt+2)=1000;
     end
+    y(cnt+3)=p
 endfunction
 function rw=evalr(pls)
     //pls nx2 matrix, position and action
