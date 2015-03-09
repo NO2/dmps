@@ -33,10 +33,10 @@ function r=rw(s,t,a,w)
     //disp(w);
     //disp(size(y,1));
     //r=1;
-    r=(y')*w;
+    //wn=w/norm(w,2);
+    r=(y')*w;//1003-1;
 endfunction
 function a=getact(s,t,w)
-    r=zeros(3,1);
     for j=1:3
         r(j)=rw(s,t,j-2,w);
     end

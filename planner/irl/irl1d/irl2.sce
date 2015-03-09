@@ -7,7 +7,7 @@ w=rand(ws,1);
 //w=[rand();rand();-rand();rand();-rand();rand()]
 //ws,ns have size
 pls=cell();
-pls(1).entries=qlearn(w);
+pls(1).entries=br(w);
 
 for ns=1:20
     //find j -> min u(e)-u(j)
@@ -24,7 +24,7 @@ for ns=1:20
     b=ones(ns,1);
     xopt=qp_solve(Q,p,C,b,0);
     w=xopt;
-    pls(ns+1).entries=qlearn(w);
+    pls(ns+1).entries=br(w);
 end
 
 
