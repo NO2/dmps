@@ -1,13 +1,13 @@
 function y=genf(p, t, a) //p:state reached by action a at time t
     y=zeros(ws,1);
-    cnt=2;
+    //cnt=2;
     //y(1)=k;
     //y(1)=0;
     if (p>0 & p<=gsize & t>0 & t<3*gsize) then //loadp should be executed first
         if (strcmp(part(grid(t+1),p+1),"X")==0) then
             y(1)=-1;
         elseif (strcmp(part(grid(t+2),p+1),"X")==0) then
-            y(1)=-.05;
+            y(1)=-.005;
         //else
         //    y(1)=1;
         end
@@ -16,13 +16,13 @@ function y=genf(p, t, a) //p:state reached by action a at time t
         end
     end
     //cnt=1;
-    y(3)=abs(a);
+    y(3)=-abs(a);
     //y(cnt+4)=0;
-    if p==gsize+1 then
-        y(4)=1000;
-    end
-    y(5)=a;
-    y(6)=-1;
+    //if p==gsize+1 then
+    //    y(4)=1000;
+    //end
+    y(4)=a;
+    y(5)=-1;
     //y(cnt+3)=1;
 endfunction
 function rw=evalr(pls)

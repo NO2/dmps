@@ -4,6 +4,7 @@
 //get new optimal policy , add to set of policies
 //--run for n times--
 w=rand(ws,1);
+//w=[1;1;.1;.07;.3;.03];
 w=w/norm(w,2);
 lmd=0.9;
 //ws,ns have size
@@ -21,18 +22,19 @@ for ns=1:20
     Da=eefc(w);
     //compute gradient
     fs=evalr(epls);
-    dw=fs';
+    dw=0;
     for i=1:gsize+2
         for t=1:3*gsize
             //for sa=1:3*gsize
                 for j=1:3
-                    dw=dw-Da(i,t,j)*genf(i-1+j-2,t,j-2);//rw(i-1,t-1,sa-1,j-2,w);
+                    dw=dw+Da(i,t,j)*genf(i-1+j-2,t,j-2);//rw(i-1,t-1,sa-1,j-2,w);
                 end
             //end
         end
     end
     //update weights
-    dw=dw/norm(dw,2);
+    dw=dw/sum(Da);
+    dw=(fs')/size(epls,1)-dw;
     w=w.*exp(lmd*dw/ns);
     //w=w-lmd*dw/ns;
     w=w/norm(w,2);

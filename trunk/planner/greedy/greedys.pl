@@ -2,7 +2,7 @@ use strict;
 use 5.010;
 use constant H => 5;
 
-open FILE, "<", "gen0.dat" or die $!;
+open FILE, "<", "gen1.dat" or die $!;
 my @parr;
 my $size;
 chomp($size = <FILE>);
