@@ -75,11 +75,7 @@ for i=1:size(FObj_Pop,2)
   _Max = max(MO_FObj_Pop(:,i));
   _Min = min(MO_FObj_Pop(:,i));
   for j=2:size(MO_FObj_Pop,1)-1
-      if (_Max - _Min)>0
-        Crowdist(Index(j)) = Crowdist(Index(j)) - (MO_FObj_Pop(j+1,i) - MO_FObj_Pop(j-1,i)) / (_Max - _Min);
-       else
-           Crowdist(Index(j)) = Crowdist(Index(j)) - (MO_FObj_Pop(j+1,i) - MO_FObj_Pop(j-1,i));
-       end
+      Crowdist(Index(j)) = Crowdist(Index(j)) - (MO_FObj_Pop(j+1,i) - MO_FObj_Pop(j-1,i)) / (_Max - _Min+1);
   end
 end
 
@@ -181,11 +177,7 @@ for It=1:nb_generation
     _Max = max(MO_All_FObj(:,k));
     _Min = min(MO_All_FObj(:,k));
     for j=2:size(MO_All_FObj,1)-1
-      if (_Max - _Min)>0
-      Crowdist(Index(j)) = Crowdist(Index(j)) - (MO_All_FObj(j+1,k) - MO_All_FObj(j-1,k)) / (_Max - _Min);
-      else
-        Crowdist(Index(j)) = Crowdist(Index(j)) - (MO_All_FObj(j+1,k) - MO_All_FObj(j-1,k));
-      end
+      Crowdist(Index(j)) = Crowdist(Index(j)) - (MO_All_FObj(j+1,k) - MO_All_FObj(j-1,k)) / (_Max - _Min + 1);
     end
   end
   //
