@@ -108,6 +108,8 @@ function r=rw2(s,t,a,w,d)
             end
             //printf("%d\n",mr);
             r=r+mr;
+        else
+            r=r+w(4)*s/3;
         end
     end
     //disp(w);

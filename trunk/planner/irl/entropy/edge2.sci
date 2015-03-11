@@ -8,8 +8,8 @@ function d=eefc(wt)
     z1s(gsize+2,:)=ones(z1s(gsize+2,:));
     printf("p1\n");
     for n=1:20
-        for i=gsize+1:-1:1
-            for t=3*gsize-1:-1:1
+        for t=3*gsize-1:-1:1
+            for i=gsize+1:-1:1
                 //for sa=3*gsize-1:-1:1
                     for j=1:3
                         //check valid action
@@ -22,16 +22,18 @@ function d=eefc(wt)
                         end
                     end
                     z1s(i,t)=sum(z1a(i,t,:));
+                    //z1a(i,t,:)=z1a(i,t,:)/z1s(i,t);
                     //printf("%d %d %f\n",i,t,z1s(i,t));
                 //end
             end
+            //z1s(:,t)=z1s(:,t)/sum(z1s(:,t));
         end
     end
     printf("%f p2\n",z1s(1,1));
-    z2s(1,1)=1;
+    z2s(1,:)=ones(z2s(1,:));
     for n=1:20
-        for i=1:gsize+1
-            for t=1:3*gsize-1
+        for t=1:3*gsize-1
+            for i=1:gsize+1
                 //for sa=1:3*gsize-1
                     for j=1:3
                         //check valid action
@@ -40,6 +42,7 @@ function d=eefc(wt)
                             z2a(i,t,j)=exp(rwn(i-1,t-1,j-2,wt))*z2s(i,t);
                         end
                     end
+                    //z2a(i,t,:)=z2a(i,t,:)/sum(z2a(i,t,:));
                     if (t>=2 & t<3*gsize) then 
                         if i>=2 & i<=gsize+1 then
                             z2s(i,t)=z2a(i-1,t-1,3)+z2a(i+1,t-1,1)+z2a(i,t-1,2);
@@ -51,6 +54,7 @@ function d=eefc(wt)
                     end     
                 //end
             end
+            //z2s(:,t)=z2s(:,t)/sum(z2s(:,t));
         end
     end
     printf("p3\n");
@@ -70,10 +74,12 @@ function d=eefc(wt)
     end
 endfunction
 function r=rwn(s,t,a,w)
-    y=genf(s+a,t+1,a);
+    //y=genf(s+a,t+1,a);
+    y=rw2(s,t,a,w,H);
     //disp(w);
     //disp(size(y,1));
     //r=1;
     //wn=w/norm(w,2);
-    r=(y')*w/1003-1;
+    //r=(y')*w/1003-1;
+    r=y/(gsize+2*H*ws)-1;//normalise between -1 & 0?
 endfunction
